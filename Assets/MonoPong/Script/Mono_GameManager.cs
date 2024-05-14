@@ -8,9 +8,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using static Mono_GameManager;
 
 public class Mono_GameManager : MonoBehaviour
 {
+    public static Mono_GameManager instance;
+    public static Mono_GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = new Mono_GameManager();
+            return instance;
+        }
+    }
+    
 
     [DllImport("__Internal")]
     private static extern void SaveScore(string username, string score, string key);
@@ -116,11 +128,13 @@ public class Mono_GameManager : MonoBehaviour
     /*<summary>Maps the methods to the states<summary>*/
     protected Dictionary<GameStates, Action> fms = new Dictionary<GameStates, Action>();
     private string username;
-    private int totalRounds = -1;
+    public int totalRounds = -1;
     private static string secretKey;
-    private int round = -1;
+    public int round = -1;
     void Awake()
     {
+        if(instance == null)
+            instance = this;
         //set the default number of Lives
         Lives = DefaultLives;
 
@@ -156,8 +170,8 @@ public class Mono_GameManager : MonoBehaviour
         LoadData();
 
 #if UNITY_EDITOR
-
-        SetSettings(JsonUtility.ToJson(new SettingsSchema() { secretKey = "test", totalRounds = 2, username = "momo" }));
+        if (totalRounds == -1)
+            SetSettings(JsonUtility.ToJson(new SettingsSchema() { secretKey = "test", totalRounds = 2, username = "momo" }));
 #endif
 
     }
@@ -165,16 +179,21 @@ public class Mono_GameManager : MonoBehaviour
 
     public void SetSettings(string json)
     {
-        SettingsSchema settingsSchema = JsonUtility.FromJson<SettingsSchema>(json);
+        SettingsSchema_MonoGame settingsSchema = JsonUtility.FromJson<SettingsSchema_MonoGame>(json);
 
         username = settingsSchema.username;
         totalRounds = settingsSchema.totalRounds;
         secretKey = settingsSchema.secretKey;
-        SaveData();
 
+        if (totalRounds > 0) round = 0;
+        SaveData();
+        if (totalRounds > -1)
+            roundsText.text = $"ROUND {round + 1}/{totalRounds}";
+        else
+            roundsText.text = "";
     }
 
-    private void SaveData()
+    public void SaveData()
     {
         PlayerPrefs.SetInt(SAVED_Mono__KEYS.ROUND.ToString(), round);
         PlayerPrefs.SetInt(SAVED_Mono__KEYS.TOTAL_ROUNDS.ToString(), totalRounds);
@@ -233,7 +252,7 @@ public class Mono_GameManager : MonoBehaviour
     {
         fms[State].Invoke();
 
-        
+
 
     }
 
@@ -344,6 +363,18 @@ public class Mono_GameManager : MonoBehaviour
         username = PlayerPrefs.GetString(SAVED_Mono__KEYS.USERNAME.ToString(), "");
 
 
+    }
+
+    public void GameOver()
+    {
+        
+        // Debug.Log("GameOver()");
+
+        if (round == totalRounds && totalRounds > -1)
+        {
+            totalRounds = -1;
+            SaveData();
+        }
     }
 
 }

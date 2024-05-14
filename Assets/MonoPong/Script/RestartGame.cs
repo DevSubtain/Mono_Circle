@@ -20,10 +20,12 @@ public class RestartGame : MonoBehaviour
     public Sprite ResetSprite;
 
     public Text text;
+
     // Use this for initialization
     void Start()
     {
-        gameManager = GameObject.FindObjectOfType<Mono_GameManager>();
+        gameManager = Mono_GameManager.instance;
+
 
     }
 
@@ -35,7 +37,7 @@ public class RestartGame : MonoBehaviour
 
         if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButtonUp(0)) && text.text == "Press Mouse or Space Button To Start")
         {
-            
+
             Press_Btns();
         }
 
@@ -43,15 +45,23 @@ public class RestartGame : MonoBehaviour
         if (Input.GetKey(KeyCode.Return) && text.text != "Press Mouse or Space Button To Start")
         {
 
-
+            if (gameManager.totalRounds > -1)
+                gameManager.roundsText.text = $"ROUND {gameManager.round + 1}/{gameManager.totalRounds}";
+            else
+                roundsText.text = "";
             Press_Btns();
 
 
         }
     }
 
-     void Press_Btns()
+    void Press_Btns()
     {
+        if (gameManager.totalRounds > 0)
+        {
+            gameManager.round++;
+            gameManager.SaveData();
+        }
         text.gameObject.SetActive(false);
         if (gameManager.State != Mono_GameManager.GameStates.PLAYING)
         {
