@@ -18,11 +18,13 @@ public class Mono_GameManager : MonoBehaviour
         get
         {
             if (instance == null)
-                instance = new Mono_GameManager();
+                instance = GameObject.FindObjectOfType<Mono_GameManager>();
             return instance;
         }
     }
-    
+
+
+    public Text roundsText;
 
     [DllImport("__Internal")]
     private static extern void SaveScore(string username, string score, string key);
@@ -133,7 +135,7 @@ public class Mono_GameManager : MonoBehaviour
     public int round = -1;
     void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
         //set the default number of Lives
         Lives = DefaultLives;
@@ -171,7 +173,7 @@ public class Mono_GameManager : MonoBehaviour
 
 #if UNITY_EDITOR
         if (totalRounds == -1)
-            SetSettings(JsonUtility.ToJson(new SettingsSchema() { secretKey = "test", totalRounds = 2, username = "momo" }));
+            SetSettings(JsonUtility.ToJson(new SettingsSchema_MonoGame() { secretKey = "test", totalRounds = 2, username = "momo" }));
 #endif
 
     }
@@ -187,10 +189,7 @@ public class Mono_GameManager : MonoBehaviour
 
         if (totalRounds > 0) round = 0;
         SaveData();
-        if (totalRounds > -1)
-            roundsText.text = $"ROUND {round + 1}/{totalRounds}";
-        else
-            roundsText.text = "";
+        OnUpdateDisplay();
     }
 
     public void SaveData()
@@ -367,7 +366,7 @@ public class Mono_GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        
+
         // Debug.Log("GameOver()");
 
         if (round == totalRounds && totalRounds > -1)
@@ -377,6 +376,21 @@ public class Mono_GameManager : MonoBehaviour
         }
     }
 
+    public void OnUpdateDisplay()
+    {
+        if (totalRounds > -1)
+            roundsText.text = $"ROUND {round + 1}/{totalRounds}";
+        else
+            roundsText.text = "";
+    }
+
+
+    public void Round_To_Trigger()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        RoundTrigger(username, round, secretKey);
+#endif
+    }
 }
 enum SAVED_Mono__KEYS { ROUND, TOTAL_ROUNDS, USERNAME }
 public class SettingsSchema_MonoGame { public string username; public string secretKey; public int totalRounds; }

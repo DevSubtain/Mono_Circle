@@ -67,9 +67,9 @@ public class GameManager : MonoBehaviour
         }
         OnGameStarted?.Invoke();
 
-#if UNITY_WEBGL && !UNITY_EDITOR
+//# UNITY_WEBGL && !UNITY_EDITOR
         RoundTrigger(username, round, secretKey);
-#endif
+//#end
 
         // Debug.Log("StartGame()");
     }

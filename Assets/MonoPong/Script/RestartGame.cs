@@ -33,22 +33,22 @@ public class RestartGame : MonoBehaviour
 
     private void Update()
     {
+        if (SplashScreen.instance.splash_Obj.activeInHierarchy)
+            return;
 
 
-        if ((Input.GetKey(KeyCode.Space) || Input.GetMouseButtonUp(0)) && text.text == "Press Mouse or Space Button To Start")
+
+        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0)) && text.text == "Press Mouse or Space Button To Start")
         {
 
             Press_Btns();
         }
 
 
-        if (Input.GetKey(KeyCode.Return) && text.text != "Press Mouse or Space Button To Start")
+        if (Input.GetButtonUp("Submit") && text.text != "Press Mouse or Space Button To Start")
         {
 
-            if (gameManager.totalRounds > -1)
-                gameManager.roundsText.text = $"ROUND {gameManager.round + 1}/{gameManager.totalRounds}";
-            else
-                roundsText.text = "";
+            gameManager.OnUpdateDisplay();
             Press_Btns();
 
 
@@ -62,6 +62,7 @@ public class RestartGame : MonoBehaviour
             gameManager.round++;
             gameManager.SaveData();
         }
+        gameManager.Round_To_Trigger();
         text.gameObject.SetActive(false);
         if (gameManager.State != Mono_GameManager.GameStates.PLAYING)
         {
