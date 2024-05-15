@@ -391,6 +391,14 @@ public class Mono_GameManager : MonoBehaviour
         RoundTrigger(username, round, secretKey);
 #endif
     }
+
+    public void SaveScore(string score)
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        SaveScore(username, score, secretKey);
+#endif
+        // Debug.Log("Saving score - username: " + username + " - score: " + score);
+    }
 }
 enum SAVED_Mono__KEYS { ROUND, TOTAL_ROUNDS, USERNAME }
 public class SettingsSchema_MonoGame { public string username; public string secretKey; public int totalRounds; }
