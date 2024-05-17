@@ -9,6 +9,10 @@ using System.Collections;
 public class ScoreScript : MonoBehaviour
 {
 
+
+
+    
+
     /*<summary>the current score ...ie number of bounces<summary>*/
     public int Score = 0;
 
@@ -26,7 +30,7 @@ public class ScoreScript : MonoBehaviour
         Score += Delta;
 
         gameObject.GetComponent<Text>().text = Score.ToString();
-        GameManager.instance.SaveScore(Score.ToString());
+        
     }
 
     //method used to reset the score

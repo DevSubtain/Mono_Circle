@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class MoveBall : MonoBehaviour
 {
@@ -151,7 +152,7 @@ public class MoveBall : MonoBehaviour
 
             GameObject.FindObjectOfType<GameManager>().SetState(GameManager.GameStates.DEATH);
 
-
+            GameManager.instance.SaveScore(scoreScript.Score.ToString());
             GameManager.instance.GameOver();
             Destroy(gameObject);
             RestartGame.Instance.AssignText();
