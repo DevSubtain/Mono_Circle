@@ -149,10 +149,10 @@ public class MoveBall : MonoBehaviour
 
             GameObject.Find("AudioSource").GetComponent<AudioSource>().PlayOneShot(DeathAudio);
 
-            GameObject.FindObjectOfType<Mono_GameManager>().SetState(Mono_GameManager.GameStates.DEATH);
+            GameObject.FindObjectOfType<GameManager>().SetState(GameManager.GameStates.DEATH);
 
 
-            Mono_GameManager.instance.GameOver();
+            GameManager.instance.GameOver();
             Destroy(gameObject);
             RestartGame.Instance.AssignText();
         }

@@ -9,7 +9,7 @@ using System.Collections;
 public class RestartGame : MonoBehaviour
 {
 
-    private Mono_GameManager gameManager;
+    private GameManager gameManager;
 
     public static RestartGame Instance;
     private void Awake()
@@ -24,7 +24,7 @@ public class RestartGame : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        gameManager = Mono_GameManager.instance;
+        gameManager = GameManager.instance;
 
 
     }
@@ -64,9 +64,9 @@ public class RestartGame : MonoBehaviour
         }
         gameManager.Round_To_Trigger();
         text.gameObject.SetActive(false);
-        if (gameManager.State != Mono_GameManager.GameStates.PLAYING)
+        if (gameManager.State != GameManager.GameStates.PLAYING)
         {
-            gameManager.SetState(Mono_GameManager.GameStates.PLAYING);
+            gameManager.SetState(GameManager.GameStates.PLAYING);
 
         }
     }
@@ -80,9 +80,9 @@ public class RestartGame : MonoBehaviour
     //method used when the button is pressed
     public void Press()
     {
-        if (gameManager.State != Mono_GameManager.GameStates.PLAYING)
+        if (gameManager.State != GameManager.GameStates.PLAYING)
         {
-            gameManager.SetState(Mono_GameManager.GameStates.PLAYING);
+            gameManager.SetState(GameManager.GameStates.PLAYING);
             Invoke("ChangeButtonImage", 1f);
         }
     }

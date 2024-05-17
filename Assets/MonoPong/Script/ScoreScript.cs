@@ -26,7 +26,7 @@ public class ScoreScript : MonoBehaviour
         Score += Delta;
 
         gameObject.GetComponent<Text>().text = Score.ToString();
-        Mono_GameManager.instance.SaveScore(Score.ToString());
+        GameManager.instance.SaveScore(Score.ToString());
     }
 
     //method used to reset the score

@@ -8,17 +8,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static Mono_GameManager;
+using static GameManager;
 
-public class Mono_GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public static Mono_GameManager instance;
-    public static Mono_GameManager Instance
+    public static GameManager instance;
+    public static GameManager Instance
     {
         get
         {
             if (instance == null)
-                instance = GameObject.FindObjectOfType<Mono_GameManager>();
+                instance = GameObject.FindObjectOfType<GameManager>();
             return instance;
         }
     }

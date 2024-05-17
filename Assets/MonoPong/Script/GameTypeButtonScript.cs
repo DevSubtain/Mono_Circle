@@ -17,7 +17,7 @@ public class GameTypeButtonScript : MonoBehaviour {
 //    private List<Image> Icons = new List<Image>();
 
     //other scripts/gameObject to reference
-    private Mono_GameManager gameManager;
+    private GameManager gameManager;
 
     private GameObject notifyObject;
     private Image notifyObjectBackground;
@@ -37,24 +37,24 @@ public class GameTypeButtonScript : MonoBehaviour {
             notifyObjectText = notifyObject.GetComponentInChildren<Text>();
         }
 
-        gameManager = GameObject.FindObjectOfType<Mono_GameManager>();
+        gameManager = GameObject.FindObjectOfType<GameManager>();
 
         Txt =  gameObject.transform.Find("Text").GetComponent<Text>();
 
 
         if (GameTypeInt == 0)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.NoResizing;
+            gameManager.GameType = GameManager.GameTypes.NoResizing;
             Txt.text = "Mode: Normal";
         }
         else if (GameTypeInt == 1)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.ResizeOverTime;
+            gameManager.GameType = GameManager.GameTypes.ResizeOverTime;
             Txt.text = "Mode: Shrink";
         }
         else if (GameTypeInt ==  2)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.PlusMinusBalls;
+            gameManager.GameType = GameManager.GameTypes.PlusMinusBalls;
             Txt.text = "Mode: +/-";
         }
 
@@ -65,7 +65,7 @@ public class GameTypeButtonScript : MonoBehaviour {
     void FixedUpdate()
     {
 
-        if (gameManager.State == Mono_GameManager.GameStates.IDLE)
+        if (gameManager.State == GameManager.GameStates.IDLE)
         {
             gameObject.GetComponent<Button>().interactable = true;
             Txt.color = Color.Lerp(Txt.color,new Color(1f,1f,1f,1f), Time.deltaTime * 2.5f);
@@ -100,7 +100,7 @@ public class GameTypeButtonScript : MonoBehaviour {
 
         if (GameTypeInt == 0)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.NoResizing;
+            gameManager.GameType = GameManager.GameTypes.NoResizing;
 
             notifyObjectBackground.color = new Color(0f,0f,0f,0.75f);
             notifyObjectText.color = new Color(1f,1f,1f,1f);
@@ -109,7 +109,7 @@ public class GameTypeButtonScript : MonoBehaviour {
         }
         else if (GameTypeInt == 1)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.ResizeOverTime;
+            gameManager.GameType = GameManager.GameTypes.ResizeOverTime;
 
             notifyObjectBackground.color = new Color(0f,0f,0f,0.75f);
             notifyObjectText.color = new Color(1f,1f,1f,1f);
@@ -118,7 +118,7 @@ public class GameTypeButtonScript : MonoBehaviour {
         }
         else if (GameTypeInt ==  2)
         {
-            gameManager.GameType = Mono_GameManager.GameTypes.PlusMinusBalls;
+            gameManager.GameType = GameManager.GameTypes.PlusMinusBalls;
 
             notifyObjectBackground.color = new Color(0f,0f,0f,0.75f);
             notifyObjectText.color = new Color(1f,1f,1f,1f);
