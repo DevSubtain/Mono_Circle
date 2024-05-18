@@ -169,12 +169,13 @@ public class GameManager : MonoBehaviour
         {
             LivesCount.enabled = false;
         }
+
         LoadData();
 
-        //#if UNITY_EDITOR
+#if UNITY_EDITOR
         if (totalRounds == -1)
             SetSettings(JsonUtility.ToJson(new SettingsSchema_MonoGame() { secretKey = "test", totalRounds = 2, username = "momo" }));
-        //#endif
+#endif
 
     }
 
@@ -361,7 +362,7 @@ public class GameManager : MonoBehaviour
         totalRounds = PlayerPrefs.GetInt(SAVED_Mono__KEYS.TOTAL_ROUNDS.ToString(), -1);
         username = PlayerPrefs.GetString(SAVED_Mono__KEYS.USERNAME.ToString(), "");
 
-
+        OnUpdateDisplay();
     }
 
     public void GameOver()

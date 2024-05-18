@@ -8,7 +8,7 @@ using System.Collections;
 
 public class RestartGame : MonoBehaviour
 {
-
+    public bool isGameOver = true;
     private GameManager gameManager;
 
     public static RestartGame Instance;
@@ -38,22 +38,27 @@ public class RestartGame : MonoBehaviour
 
 
 
-        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0)) && text.text == "Press Mouse or Space Button To Start")
+        if ((Input.GetButtonUp("Jump") || Input.GetMouseButtonUp(0)) && text.text == "Press Mouse or Space Button To Start" && isGameOver)
         {
-
+            isGameOver = false;
             Press_Btns();
         }
 
 
-        if (Input.GetButtonUp("Submit") && text.text != "Press Mouse or Space Button To Start")
+        if (Input.GetButtonUp("Submit") && text.text != "Press Mouse or Space Button To Start" && isGameOver)
         {
-
+            isGameOver = false;
             gameManager.OnUpdateDisplay();
             Press_Btns();
 
 
         }
     }
+
+
+
+   
+
 
     void Press_Btns()
     {
@@ -63,6 +68,7 @@ public class RestartGame : MonoBehaviour
             gameManager.SaveData();
         }
         gameManager.Round_To_Trigger();
+
         text.gameObject.SetActive(false);
         if (gameManager.State != GameManager.GameStates.PLAYING)
         {

@@ -156,6 +156,7 @@ public class MoveBall : MonoBehaviour
             GameManager.instance.GameOver();
             Destroy(gameObject);
             RestartGame.Instance.AssignText();
+            RestartGame.Instance.isGameOver = true;
         }
     }
 
