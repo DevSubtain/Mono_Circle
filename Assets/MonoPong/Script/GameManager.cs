@@ -13,15 +13,7 @@ using static GameManager;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public static GameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = GameObject.FindObjectOfType<GameManager>();
-            return instance;
-        }
-    }
+    
 
 
     public Text roundsText;
@@ -172,10 +164,10 @@ public class GameManager : MonoBehaviour
 
         LoadData();
 
-#if UNITY_EDITOR
+//#if UNITY_EDITOR
         if (totalRounds == -1)
             SetSettings(JsonUtility.ToJson(new SettingsSchema_MonoGame() { secretKey = "test", totalRounds = 2, username = "momo" }));
-#endif
+//#endif
 
     }
 
