@@ -171,10 +171,10 @@ public class GameManager : MonoBehaviour
         }
         LoadData();
 
-#if UNITY_EDITOR
+        //#if UNITY_EDITOR
         if (totalRounds == -1)
             SetSettings(JsonUtility.ToJson(new SettingsSchema_MonoGame() { secretKey = "test", totalRounds = 2, username = "momo" }));
-#endif
+        //#endif
 
     }
 
